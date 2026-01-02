@@ -5,162 +5,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ANIDUB MAX</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #0b0b0b; color: #efefef; }
-        .anime-card:hover { transform: scale(1.05); transition: 0.3s; }
-        .hero-gradient { background: linear-gradient(to top, #0b0b0b 10%, transparent 100%); }
+        /* Твой фон из файла 1000148772.jpg */
+        body { 
+            background: url('1000148772.jpg') no-repeat center center fixed; 
+            background-size: cover;
+            color: #efefef; 
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .glass-header { background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); }
+        .anime-card { transition: 0.3s; background: rgba(24, 24, 24, 0.9); border: 1px solid rgba(255,255,255,0.1); }
+        .anime-card:hover { transform: scale(1.05); border-color: #3b82f6; }
+        /* Шрифт на жанры */
+        .genre-font { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
+        .description-box { background: rgba(0, 0, 0, 0.7); padding: 15px; border-radius: 12px; margin-top: 15px; }
     </style>
 </head>
-<body class="font-sans min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col">
 
-    <header class="p-4 border-b border-gray-800 flex justify-between items-center bg-[#181818] sticky top-0 z-50">
+    <header class="p-4 border-b border-gray-800 flex justify-between items-center glass-header sticky top-0 z-50">
         <div class="text-2xl font-bold text-white cursor-pointer" onclick="switchTab('home')">
             ANIDUB <span class="bg-blue-600 text-xs px-2 py-1 rounded">MAX</span>
         </div>
         <div class="flex gap-4 items-center">
-            <button onclick="switchTab('home')" class="text-gray-300">🏠</button>
             <div class="relative flex items-center bg-black rounded-full px-3 py-1 border border-gray-700">
-                <input id="search-input" type="text" placeholder="Поиск..." class="bg-transparent text-xs outline-none w-24 focus:w-40 transition-all">
-                <button onclick="searchAnime()" class="text-gray-400">🔍</button>
+                <input id="search-input" type="text" placeholder="Поиск..." class="bg-transparent text-xs outline-none w-24 focus:w-40 transition-all text-white">
+                <span class="text-gray-400">🔍</span>
             </div>
-            <button id="auth-nav-btn" onclick="switchTab('profile')" class="bg-blue-600 px-4 py-1 rounded text-sm font-bold uppercase">Войти</button>
+            <button onclick="switchTab('profile')" class="bg-blue-600 px-4 py-1 rounded text-xs font-bold uppercase">Войти</button>
         </div>
     </header>
 
-    <main id="home-page" class="flex-grow">
-        <div class="relative w-full h-64 bg-cover bg-center" style="background-image: url('https://m.media-amazon.com/images/M/MV5BN2NlM2Y5Uy1hYzExMy00OTI4LWEyNjItYTk4NzU2OGFlVjA2XkEyXkFqcGdeQXVyMzgxODM4NjM@._V1_.jpg');">
-            <div class="absolute inset-0 hero-gradient"></div>
-            <div class="relative p-6 flex flex-col justify-end h-full">
-                <h1 class="text-3xl font-black uppercase">Человек Бензопила</h1>
-                <button onclick="openVideo('Человек Бензопила', 'https://t.me/Rahimuglmagiyaxzisnsgd/2?embed=1')" class="mt-2 bg-blue-600 w-fit px-6 py-2 rounded-full font-bold">▶ СМОТРЕТЬ</button>
-            </div>
-        </div>
-
-        <div class="p-4">
-            <h2 class="text-xl mb-4 border-l-4 border-blue-600 pl-2">НОВИНКИ</h2>
-            <div id="anime-list" class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                
-                <div class="anime-card bg-gray-900 rounded-lg overflow-hidden cursor-pointer shadow-lg" data-title="Первый шаг" onclick="openVideo('Первый шаг', 'https://t.me/Rahimuglmagiyaxzisnsgd/2?embed=1')">
-                    <img src="https://m.media-amazon.com/images/M/MV5BMTY5OTE4Mjc1N15BMl5BanBnXkFtZTYwNjc5Njg3._V1_.jpg" class="w-full h-48 object-cover">
-                    <div class="p-2">
-                        <p class="text-sm font-bold truncate">Первый шаг</p>
-                        <p class="text-xs text-gray-400">Спорт / Бокс</p>
-                    </div>
+    <main id="home-page" class="flex-grow p-4">
+        <h2 class="text-xl mb-6 border-l-4 border-blue-600 pl-2 font-bold uppercase">Новинки сезона</h2>
+        <div id="anime-list" class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            
+            <div class="anime-card rounded-xl overflow-hidden cursor-pointer shadow-2xl" 
+                 data-title="Первый шаг" 
+                 onclick="openVideo('Первый шаг', 'archive_org_link_here', 'Иппо Макуноути — крайне тихий и скромный старшеклассник, у которого совсем нет свободного времени. Вся его жизнь проходит за помощью маме в их семейном рыболовном магазине. Но случайная встреча с профессиональным боксёром меняет всё. Иппо решает доказать себе и миру, что он может стать сильным!')">
+                <img src="1000148768.png" class="w-full h-72 object-cover">
+                <div class="p-3">
+                    <p class="text-sm font-bold truncate">Первый шаг</p>
+                    <p class="text-[10px] text-blue-400 mt-1 genre-font">Спорт, Бокс, Комедия</p>
                 </div>
-
-                <div class="anime-card bg-gray-900 rounded-lg overflow-hidden cursor-pointer shadow-lg" data-title="Наруто" onclick="openVideo('Наруто', 'https://t.me/Rahimuglmagiyaxzisnsgd/2?embed=1')">
-                    <img src="https://m.media-amazon.com/images/M/MV5BZmQ5YzNlMzktZDU5OC00ZGU1LWIwYWUtZTEyNTkyNWZkTkU2XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg" class="w-full h-48 object-cover">
-                    <div class="p-2">
-                        <p class="text-sm font-bold truncate">Наруто: Ураганные хроники</p>
-                        <p class="text-xs text-gray-400">Приключения</p>
-                    </div>
-                </div>
-
             </div>
+
         </div>
     </main>
 
     <main id="video-page" class="hidden flex-grow p-4">
-        <button onclick="switchTab('home')" class="mb-4 text-gray-400">← Назад</button>
-        <h2 id="video-title" class="text-xl mb-4 font-bold text-blue-500">Название</h2>
-        <div class="bg-black rounded-lg overflow-hidden aspect-video">
-            <iframe id="main-player-frame" src="" class="w-full h-full" frameborder="0" allowfullscreen></iframe>
-        </div>
-    </main>
+        <button onclick="switchTab('home')" class="mb-4 text-gray-400 text-sm">← Назад к списку</button>
+        <div class="max-w-4xl mx-auto">
+            <h2 id="video-title" class="text-3xl font-bold text-white mb-2">Название</h2>
+            <p class="genre-font text-blue-500 mb-4">Жанр: Спорт, Бокс</p>
+            
+            <div class="bg-black rounded-2xl overflow-hidden shadow-2xl border border-gray-800 aspect-video">
+                <iframe id="main-player" class="w-full h-full" src="" frameborder="0" allowfullscreen></iframe>
+            </div>
 
-    <main id="profile-page" class="hidden flex-grow p-4">
-        <div id="auth-section" class="flex items-center justify-center min-h-[60vh]">
-            <div class="bg-[#181818] p-8 rounded-2xl w-full max-w-sm border border-gray-800 text-center shadow-2xl">
-                <h2 id="profile-title" class="text-2xl font-bold mb-6">Вход в аккаунт</h2>
-                <div id="auth-ui" class="space-y-4">
-                    <input id="email" type="email" placeholder="Email" class="w-full bg-[#0b0b0b] border border-gray-800 rounded-lg p-3 text-white outline-none focus:border-blue-600 transition">
-                    <input id="password" type="password" placeholder="Пароль" class="w-full bg-[#0b0b0b] border border-gray-800 rounded-lg p-3 text-white outline-none focus:border-blue-600 transition">
-                    <div class="flex gap-2">
-                        <button id="btn-login" class="flex-1 bg-blue-600 py-3 rounded-lg font-bold">Войти</button>
-                        <button id="btn-signup" class="flex-1 bg-gray-700 py-3 rounded-lg font-bold">Рег.</button>
-                    </div>
-                </div>
-                <div id="user-ui" class="hidden">
-                    <div class="w-20 h-20 bg-blue-600 rounded-full mx-auto flex items-center justify-center text-3xl font-bold mb-4">U</div>
-                    <p id="display-email" class="text-gray-400 mb-6"></p>
-                    <button id="btn-logout" class="w-full bg-red-600/20 text-red-500 py-3 rounded-lg font-bold border border-red-500/50">ВЫЙТИ</button>
-                </div>
+            <div class="description-box">
+                <h3 class="text-lg font-bold text-blue-500 mb-2 uppercase">Описание:</h3>
+                <p id="video-description" class="text-sm leading-relaxed text-gray-200">Текст описания...</p>
             </div>
         </div>
     </main>
 
-    <footer class="p-6 border-t border-gray-800 text-center text-xs text-gray-600">
-        © 2026 ANIDUB MAX
-    </footer>
+    <main id="profile-page" class="hidden flex-grow flex items-center justify-center">
+        <div class="bg-black/80 p-8 rounded-2xl w-full max-w-sm border border-gray-800 text-center backdrop-blur-md">
+            <h2 class="text-2xl font-bold mb-6">Авторизация</h2>
+            <div class="space-y-4">
+                <input type="email" placeholder="Email" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 outline-none focus:border-blue-600">
+                <input type="password" placeholder="Пароль" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 outline-none focus:border-blue-700">
+                <button class="w-full bg-blue-600 py-3 rounded-lg font-bold">ВОЙТИ</button>
+            </div>
+        </div>
+    </main>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyAi6oH-CiZPQ8AkEFOWqo_-A8Sf_sEA3iM",
-            authDomain: "anime-site-19d41.firebaseapp.com",
-            projectId: "anime-site-19d41",
-            storageBucket: "anime-site-19d41.firebasestorage.app",
-            messagingSenderId: "786981297094",
-            appId: "1:786981297094:web:1533cafaafcc8a21e8f0c7",
-            measurementId: "G-8Y9WWDWPT0"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-
-        window.switchTab = (tab) => {
+    <script>
+        function switchTab(tab) {
             ['home-page', 'video-page', 'profile-page'].forEach(id => document.getElementById(id).classList.add('hidden'));
             document.getElementById(tab + '-page').classList.remove('hidden');
-        };
+            if(tab !== 'video') document.getElementById('main-player').src = "";
+        }
 
-        window.openVideo = (title, url) => {
+        function openVideo(title, url, description) {
             document.getElementById('video-title').innerText = title;
-            document.getElementById('main-player-frame').src = url;
+            document.getElementById('video-description').innerText = description;
+            // Ссылка на эмбед телеграма или archive.org
+            document.getElementById('main-player').src = "https://t.me/Rahimuglmagiyaxzisnsgd/2?embed=1"; 
             switchTab('video');
-        };
+        }
 
-        window.searchAnime = () => {
-            const query = document.getElementById('search-input').value.toLowerCase();
-            const cards = document.querySelectorAll('.anime-card');
-            cards.forEach(card => {
+        // Поиск по лупе
+        document.getElementById('search-input').oninput = (e) => {
+            const query = e.target.value.toLowerCase();
+            document.querySelectorAll('.anime-card').forEach(card => {
                 const title = card.getAttribute('data-title').toLowerCase();
                 card.style.display = title.includes(query) ? 'block' : 'none';
             });
         };
-
-        document.getElementById('search-input').oninput = searchAnime;
-
-        document.getElementById('btn-signup').onclick = () => {
-            createUserWithEmailAndPassword(auth, email.value, password.value)
-                .then(() => alert("Регистрация успешна!"))
-                .catch(err => alert("Ошибка: " + err.message));
-        };
-
-        document.getElementById('btn-login').onclick = () => {
-            signInWithEmailAndPassword(auth, email.value, password.value)
-                .then(() => switchTab('home'))
-                .catch(err => alert("Ошибка: " + err.message));
-        };
-
-        document.getElementById('btn-logout').onclick = () => {
-            signOut(auth).then(() => switchTab('home'));
-        };
-
-        onAuthStateChanged(auth, (user) => {
-            const navBtn = document.getElementById('auth-nav-btn');
-            if (user) {
-                navBtn.innerText = "ПРОФИЛЬ";
-                document.getElementById('auth-ui').classList.add('hidden');
-                document.getElementById('user-ui').classList.remove('hidden');
-                document.getElementById('display-email').innerText = user.email;
-            } else {
-                navBtn.innerText = "ВОЙТИ";
-                document.getElementById('auth-ui').classList.remove('hidden');
-                document.getElementById('user-ui').classList.add('hidden');
-            }
-        });
     </script>
 </body>
-</html>
+ </html>
+    
