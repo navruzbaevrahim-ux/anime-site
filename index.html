@@ -1,186 +1,77 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ANIDUB MAX</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Простая демо-страница каталога аниме — поиск, фильтрация и карточки.">
+  <title>Anime Catalog</title>
 
-    <!-- Tailwind CDN (подходит для прототипа) -->
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta property="og:title" content="Anime Catalog">
+  <meta property="og:description" content="Простая демо-страница каталога аниме.">
+  <meta property="og:type" content="website">
 
-    <!-- Шрифт -->
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
-
-    <style>
-        body {
-            background: url('1000148772.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: #efefef;
-            font-family: 'Segoe UI', sans-serif;
-        }
-        .glass-header {
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-        }
-        .anime-card {
-            transition: 0.3s;
-            background: rgba(24, 24, 24, 0.9);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .anime-card:hover {
-            transform: scale(1.05);
-            border-color: #3b82f6;
-        }
-        .genre-font {
-            font-family: 'Oswald', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .description-box {
-            background: rgba(0, 0, 0, 0.7);
-            padding: 15px;
-            border-radius: 12px;
-            margin-top: 15px;
-        }
-    </style>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/favicon.ico" />
 </head>
+<body>
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <h1 class="site-title">Anime Catalog</h1>
 
-<body class="min-h-screen flex flex-col">
+      <button id="hamburger" class="hamburger" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-nav">
+        <span class="line l1"></span>
+        <span class="line l2"></span>
+        <span class="line l3"></span>
+      </button>
 
-<header class="p-4 border-b border-gray-800 flex justify-between items-center glass-header sticky top-0 z-50">
-    <div class="text-2xl font-bold cursor-pointer" onclick="switchTab('home')">
-        ANIDUB <span class="bg-blue-600 text-xs px-2 py-1 rounded">MAX</span>
+      <nav id="site-nav" class="site-nav" role="navigation" aria-label="Главная навигация">
+        <a href="#" class="nav-link">Главная</a>
+        <a href="#" class="nav-link">Жанры</a>
+        <a href="#" class="nav-link">О проекте</a>
+      </nav>
     </div>
+  </header>
 
-    <div class="flex gap-4 items-center">
-        <div class="relative flex items-center bg-black rounded-full px-3 py-1 border border-gray-700">
-            <input id="search-input" type="text" placeholder="Поиск..."
-                   class="bg-transparent text-xs outline-none w-24 focus:w-40 transition-all text-white">
-            <span class="text-gray-400 ml-1">🔍</span>
+  <main class="container" role="main">
+    <section aria-labelledby="search-heading" class="search-section">
+      <h2 id="search-heading" class="visually-hidden">Поиск аниме</h2>
+      <div class="search-controls">
+        <input id="search" type="search" placeholder="Поиск по названию..." aria-label="Поиск по названию">
+        <select id="filter-genre" aria-label="Фильтр по жанру">
+          <option value="">Все жанры</option>
+        </select>
+      </div>
+    </section>
+
+    <section aria-labelledby="catalog-heading" class="catalog-section">
+      <h2 id="catalog-heading" class="section-title">Каталог</h2>
+      <div id="catalog" class="grid" role="list" aria-live="polite"></div>
+      <div id="empty-state" class="empty-state" hidden>Ничего не найдено.</div>
+    </section>
+  </main>
+
+  <div id="modal" class="modal" role="dialog" aria-hidden="true" aria-labelledby="modal-title">
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-panel" role="document">
+      <button class="modal-close" data-close aria-label="Закрыть">✕</button>
+      <div class="modal-content">
+        <img id="modal-img" src="" alt="" />
+        <div class="modal-info">
+          <h3 id="modal-title"></h3>
+          <p id="modal-genres" class="muted"></p>
+          <p id="modal-desc"></p>
+          <p class="muted" id="modal-year"></p>
         </div>
-        <button onclick="switchTab('profile')" class="bg-blue-600 px-4 py-1 rounded text-xs font-bold uppercase">
-            Войти
-        </button>
+      </div>
     </div>
-</header>
+  </div>
 
-<main class="flex-grow p-4">
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <p>&copy; <span id="year"></span> Anime Catalog — демо-проект</p>
+    </div>
+  </footer>
 
-    <!-- HOME -->
-    <section id="home-page">
-        <h2 class="text-xl mb-6 border-l-4 border-blue-600 pl-2 font-bold uppercase">
-            Новинки сезона
-        </h2>
-
-        <div id="anime-list" class="grid grid-cols-2 md:grid-cols-4 gap-6"></div>
-    </section>
-
-    <!-- VIDEO -->
-    <section id="video-page" class="hidden">
-        <button onclick="switchTab('home')" class="mb-4 text-gray-400 text-sm">
-            ← Назад к списку
-        </button>
-
-        <div class="max-w-4xl mx-auto">
-            <h2 id="video-title" class="text-3xl font-bold mb-2"></h2>
-            <p id="video-genres" class="genre-font text-blue-500 mb-4"></p>
-
-            <div class="bg-black rounded-2xl overflow-hidden shadow-2xl border border-gray-800 aspect-video">
-                <iframe
-                    id="main-player"
-                    class="w-full h-full"
-                    allow="autoplay; fullscreen"
-                    referrerpolicy="no-referrer"
-                    sandbox="allow-scripts allow-same-origin allow-presentation">
-                </iframe>
-            </div>
-
-            <div class="description-box">
-                <h3 class="text-lg font-bold text-blue-500 mb-2 uppercase">Описание</h3>
-                <p id="video-description" class="text-sm leading-relaxed text-gray-200"></p>
-            </div>
-        </div>
-    </section>
-
-    <!-- PROFILE -->
-    <section id="profile-page" class="hidden flex justify-center items-center">
-        <div class="bg-black/80 p-8 rounded-2xl w-full max-w-sm border border-gray-800 text-center backdrop-blur-md">
-            <h2 class="text-2xl font-bold mb-6">Авторизация (демо)</h2>
-
-            <div class="space-y-4">
-                <input type="email" placeholder="Email"
-                       class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 outline-none">
-                <input type="password" placeholder="Пароль"
-                       class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 outline-none">
-                <button class="w-full bg-blue-600 py-3 rounded-lg font-bold">
-                    Войти
-                </button>
-            </div>
-        </div>
-    </section>
-
-</main>
-
-<script>
-/* ===== DATA ===== */
-const animeList = [
-    {
-        title: "Первый шаг",
-        genres: "Спорт, Бокс, Комедия",
-        image: "1000148768.png",
-        video: "https://t.me/Rahimuglmagiyaxzisnsgd/2?embed=1",
-        description: "Иппо Макуноути — тихий и скромный школьник, чья жизнь меняется после встречи с профессиональным боксёром."
-    }
-];
-
-/* ===== RENDER ===== */
-const container = document.getElementById('anime-list');
-
-animeList.forEach(anime => {
-    const card = document.createElement('div');
-    card.className = "anime-card rounded-xl overflow-hidden cursor-pointer shadow-2xl";
-    card.dataset.title = anime.title.toLowerCase();
-
-    card.innerHTML = `
-        <img src="${anime.image}" class="w-full h-72 object-cover">
-        <div class="p-3">
-            <p class="text-sm font-bold truncate">${anime.title}</p>
-            <p class="text-[10px] text-blue-400 mt-1 genre-font">${anime.genres}</p>
-        </div>
-    `;
-
-    card.onclick = () => openVideo(anime);
-    container.appendChild(card);
-});
-
-/* ===== FUNCTIONS ===== */
-function switchTab(tab) {
-    ['home', 'video', 'profile'].forEach(t =>
-        document.getElementById(`${t}-page`).classList.add('hidden')
-    );
-    document.getElementById(`${tab}-page`).classList.remove('hidden');
-
-    if (tab !== 'video') {
-        document.getElementById('main-player').src = "";
-    }
-}
-
-function openVideo(anime) {
-    document.getElementById('video-title').innerText = anime.title;
-    document.getElementById('video-genres').innerText = "Жанры: " + anime.genres;
-    document.getElementById('video-description').innerText = anime.description;
-    document.getElementById('main-player').src = anime.video;
-    switchTab('video');
-}
-
-/* ===== SEARCH ===== */
-document.getElementById('search-input').addEventListener('input', e => {
-    const query = e.target.value.toLowerCase();
-    document.querySelectorAll('.anime-card').forEach(card => {
-        card.style.display = card.dataset.title.includes(query) ? '' : 'none';
-    });
-});
-</script>
-
+  <script src="main.js" defer></script>
 </body>
 </html>
