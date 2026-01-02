@@ -1,1 +1,11 @@
+body {
+    background: url('https://i.ibb.co/VpBy4yC/1000148772.jpg') no-repeat center fixed;
+    background-size: cover;
+    color: white;
+}
+.glass {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+}
+.hidden { display: none; }
 
