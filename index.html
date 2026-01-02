@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #0b0b0b; color: #efefef; }
+        .anime-card:hover { transform: scale(1.05); transition: 0.3s; }
+    </style>
+</head>
+<body class="font-sans">
+
+    <header class="p-4 border-b border-gray-800 flex justify-between items-center sticky top-0 bg-black z-50">
+        <h1 class="text-red-600 text-2xl font-bold">ANIME.GO</h1>
+        <div class="flex gap-4">
+            <button onclick="switchTab('home')" class="text-sm">Главная</button>
+            <button onclick="switchTab('profile')" class="text-sm bg-red-600 px-3 py-1 rounded">Профиль</button>
+        </div>
+    </header>
+
+    <main id="home-page" class="p-4">
+        <h2 class="text-xl mb-4">Новинки</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="anime-card bg-gray-900 rounded-lg overflow-hidden cursor-pointer" onclick="openVideo('Наруто', 'https://www.w3schools.com/html/mov_bbb.mp4')">
+                <img src="https://via.placeholder.com/300x450/1a1a1a/ffffff?text=Anime+Poster" class="w-full h-48 object-cover">
+                <div class="p-2">
+                    <p class="text-sm font-bold">Наруто: Ураганные хроники</p>
+                    <p class="text-xs text-gray-400">RU / EN</p>
+                </div>
+            </div>
+            </div>
+    </main>
+
+    <div id="video-page" class="hidden p-4">
+        <button onclick="switchTab('home')" class="mb-4 text-gray-400">← Назад</button>
+        <h2 id="video-title" class="text-xl mb-2 font-bold">Название аниме</h2>
+        
+        <div class="bg-black rounded-lg overflow-hidden">
+            <video id="main-player" controls class="w-full aspect-video">
+                <source id="video-src" src="" type="video/mp4">
+            </video>
+        </div>
+
+        <div class="mt-4 flex gap-2">
+            <button onclick="changeAudio('RU')" class="bg-gray-800 px-4 py-2 rounded text-sm active:bg-red-600">Русская озвучка</button>
+            <button onclick="changeAudio('EN')" class="bg-gray-800 px-4 py-2 rounded text-sm">English Dub</button>
+        </div>
+
+        <div class="mt-6 flex gap-4 border-t border-gray-800 pt-4">
+            <button class="flex-1 bg-gray-800 py-2 rounded">❤️ В избранное</button>
+            <button class="flex-1 bg-gray-800 py-2 rounded">👍 1.2к лайков</button>
+        </div>
+    </div>
+
+    <div id="profile-page" class="hidden p-4">
+        <div class="flex items-center gap-4 mb-8">
+            <div class="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center text-2xl font-bold">U</div>
+            <div>
+                <h2 class="text-xl">Пользователь #1</h2>
+                <p class="text-gray-400 text-sm">Профиль активен</p>
+            </div>
+        </div>
+        
+        <h3 class="text-lg mb-2">История просмотров</h3>
+        <div class="bg-gray-900 p-3 rounded mb-4 text-sm text-gray-400">Список пуст</div>
+
+        <h3 class="text-lg mb-2">Избранное</h3>
+        <div class="bg-gray-900 p-3 rounded text-sm text-gray-400">Здесь будут ваши закладки</div>
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            document.getElementById('home-page').classList.add('hidden');
+            document.getElementById('video-page').classList.add('hidden');
+            document.getElementById('profile-page').classList.add('hidden');
+            document.getElementById(tab + '-page').classList.remove('hidden');
+        }
+
+        function openVideo(title, url) {
+            document.getElementById('video-title').innerText = title;
+            const player = document.getElementById('main-player');
+            document.getElementById('video-src').src = url;
+            player.load();
+            switchTab('video');
+        }
+
+        function changeAudio(lang) {
+            alert('Смена дорожки на: ' + lang);
+            // Здесь будет логика смены ссылки на видео из вашего Bucket
+        }
+    </script>
+</body>
+      </html>
+      
