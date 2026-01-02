@@ -86,5 +86,99 @@
                     <input id="password" type="password" placeholder="Пароль" class="w-full bg-[#0b0b0b] border border-gray-800 rounded-lg p-3 text-white outline-none focus:border-blue-600 transition">
                     <div class="flex gap-2">
                         <button id="btn-login" class="flex-1 bg-blue-600 py-3 rounded-lg font-bold hover:bg-blue-700">Войти</button>
-                        <button id="btn-signup" class="flex-1 bg-gray-700 py
-                            
+                        <button id="btn-signup" class="flex-1 bg-gray-700 py-3 rounded-lg font-bold hover:bg-gray-600">Рег.</button>
+                    </div>
+                </div>
+                <div id="user-ui" class="hidden">
+                    <div class="w-20 h-20 bg-blue-600 rounded-full mx-auto flex items-center justify-center text-3xl font-bold mb-4">U</div>
+                    <p id="display-email" class="text-gray-400 mb-2 font-medium"></p>
+                    <p class="text-green-500 text-sm mb-6">Профиль активен</p>
+                    
+                    <div class="text-left space-y-4 mb-6">
+                        <h3 class="text-lg font-bold border-b border-gray-800 pb-1">История просмотров</h3>
+                        <div class="bg-gray-900 p-3 rounded text-sm text-gray-500">Список пуст</div>
+                        <h3 class="text-lg font-bold border-b border-gray-800 pb-1">Избранное</h3>
+                        <div class="bg-gray-900 p-3 rounded text-sm text-gray-500">Здесь будут ваши закладки</div>
+                    </div>
+
+                    <button id="btn-logout" class="w-full bg-red-600/20 text-red-500 py-3 rounded-lg font-bold border border-red-500/50 hover:bg-red-600/30">ВЫЙТИ</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="p-6 border-t border-gray-800 text-center text-xs text-gray-600">
+        © 2026 ANIDUB MAX. Весь контент предоставлен в ознакомительных целях.
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAi6oH-CiZPQ8AkEFOWqo_-A8Sf_sEA3iM",
+            authDomain: "anime-site-19d41.firebaseapp.com",
+            projectId: "anime-site-19d41",
+            storageBucket: "anime-site-19d41.firebasestorage.app",
+            messagingSenderId: "786981297094",
+            appId: "1:786981297094:web:1533cafaafcc8a21e8f0c7",
+            measurementId: "G-8Y9WWDWPT0"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        window.switchTab = (tab) => {
+            ['home-page', 'video-page', 'profile-page'].forEach(id => document.getElementById(id).classList.add('hidden'));
+            document.getElementById(tab + '-page').classList.remove('hidden');
+        };
+
+        window.openVideo = (title, url) => {
+            document.getElementById('video-title').innerText = title;
+            const player = document.getElementById('main-player');
+            document.getElementById('video-src').src = url;
+            player.load();
+            switchTab('video');
+        };
+
+        const emailInput = document.getElementById('email');
+        const passInput = document.getElementById('password');
+
+        document.getElementById('btn-signup').onclick = () => {
+            createUserWithEmailAndPassword(auth, emailInput.value, passInput.value)
+                .then(() => alert("Успешно! Теперь войдите."))
+                .catch(err => alert("Ошибка: " + err.message));
+        };
+
+        document.getElementById('btn-login').onclick = () => {
+            signInWithEmailAndPassword(auth, emailInput.value, passInput.value)
+                .then(() => switchTab('home'))
+                .catch(err => alert("Ошибка: " + err.message));
+        };
+
+        document.getElementById('btn-logout').onclick = () => {
+            signOut(auth).then(() => switchTab('home'));
+        };
+
+        onAuthStateChanged(auth, (user) => {
+            const authNavBtn = document.getElementById('auth-nav-btn');
+            const authUI = document.getElementById('auth-ui');
+            const userUI = document.getElementById('user-ui');
+            const profileTitle = document.getElementById('profile-title');
+
+            if (user) {
+                authNavBtn.innerText = "ПРОФИЛЬ";
+                authUI.classList.add('hidden');
+                userUI.classList.remove('hidden');
+                profileTitle.innerText = "Ваш профиль";
+                document.getElementById('display-email').innerText = user.email;
+            } else {
+                authNavBtn.innerText = "ВОЙТИ";
+                authUI.classList.remove('hidden');
+                userUI.classList.add('hidden');
+                profileTitle.innerText = "Вход в аккаунт";
+            }
+        });
+    </script>
+</body>
+</html>
