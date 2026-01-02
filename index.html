@@ -3,134 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ANIDUB MAX | Cyberpunk Edition</title>
+    <title>ANIDUB MAX | Full Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
+        /* СТИЛИ (CSS) */
         body {
             background: url('https://i.ibb.co/VpBy4yC/1000148772.jpg') no-repeat center center fixed;
             background-size: cover;
-            font-family: 'Rajdhani', sans-serif;
-            color: #fff;
-            overflow-x: hidden;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
         }
         .glass {
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(15px);
-            border: 1px solid rgba(0, 255, 255, 0.2);
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.15);
+            border-radius: 20px;
         }
-        .neon-text { text-shadow: 0 0 10px #00f2ff; }
-        .neon-border:hover {
-            border-color: #00f2ff;
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
-            transform: translateY(-5px);
+        .cyan-glow {
+            color: #00f2ff;
+            text-shadow: 0 0 10px rgba(0, 242, 255, 0.6);
         }
-        .anime-card img { transition: 0.5s; }
-        .anime-card:hover img { transform: scale(1.1); }
+        .anime-card {
+            transition: transform 0.4s, box-shadow 0.4s;
+            cursor: pointer;
+        }
+        .anime-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 25px rgba(0, 242, 255, 0.4);
+        }
         .hidden { display: none; }
+        input::placeholder { color: #555; }
     </style>
 </head>
 <body class="min-h-screen">
 
-    <header class="glass sticky top-0 z-50 p-4 flex justify-between items-center px-6">
-        <div class="text-2xl font-bold tracking-tighter cursor-pointer" onclick="showPage('home')">
-            <span class="text-white">ANIDUB</span> <span class="text-cyan-400">MAX</span>
+    <header class="glass sticky top-0 z-50 p-4 flex justify-between items-center px-6 mb-4">
+        <div class="text-2xl font-black cursor-pointer tracking-tighter" onclick="showPage('home')">
+            ANIDUB <span class="cyan-glow">MAX</span>
         </div>
-        <div class="flex items-center gap-4">
-            <div class="relative hidden md:block">
-                <input id="search" type="text" placeholder="Поиск аниме..." 
-                       class="bg-black/50 border border-cyan-900/50 rounded-full py-1 px-4 text-sm focus:outline-none focus:border-cyan-400 w-64 transition-all">
-            </div>
-            <button onclick="showPage('auth')" class="bg-cyan-600 hover:bg-cyan-400 text-black font-bold py-1 px-6 rounded-sm skew-x-[-20deg] transition-all">
-                <span class="inline-block skew-x-[20deg]">ВОЙТИ</span>
-            </button>
-        </div>
+        <button onclick="showPage('auth')" class="bg-blue-600 hover:bg-cyan-400 hover:text-black transition-all px-6 py-1 rounded font-bold">
+            ВОЙТИ
+        </button>
     </header>
 
-    <main id="home" class="p-6 max-w-7xl mx-auto">
-        <h2 class="text-3xl font-bold mb-8 neon-text italic uppercase">Новинки Сёнена</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6" id="anime-grid">
-            <div class="anime-card glass rounded-xl overflow-hidden cursor-pointer neon-border transition-all" 
-                 onclick="openAnime('Первый шаг', 'https://archive.org/download/1_20260102_20260102_1556/1.mp4', 'Иппо Макуноути — крайне тихий и скромный старшеклассник...')">
-                <div class="relative h-72 overflow-hidden">
-                    <img src="https://i.ibb.co/L9PzS8Y/1000148768.png" class="w-full h-full object-cover" alt="Hajime no Ippo">
-                    <div class="absolute top-2 right-2 bg-cyan-500 text-black text-xs font-bold px-2 py-1 rounded">HD</div>
+    <main id="home" class="p-4 max-w-7xl mx-auto">
+        <h2 class="text-2xl font-bold mb-6 border-l-4 border-cyan-400 pl-3">НОВИНКИ</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            
+            <div class="anime-card glass overflow-hidden" 
+                 onclick="openAnime('Первый шаг', 'https://archive.org/download/1_20260102_20260102_1556/1.mp4', 'Скромный старшеклассник Иппо Макуноути открывает в себе талант к боксу.')">
+                <div class="relative h-72">
+                    <img src="https://i.ibb.co/L9PzS8Y/1000148768.png" class="w-full h-full object-cover" alt="Постер">
+                    <div class="absolute top-2 right-2 bg-cyan-500 text-black text-[10px] font-bold px-2 py-0.5 rounded">HD</div>
                 </div>
                 <div class="p-3">
                     <h3 class="font-bold text-sm uppercase truncate">Первый шаг</h3>
-                    <p class="text-cyan-400 text-[10px] mt-1">Спорт • 2026 • Ongoing</p>
+                    <p class="text-gray-400 text-[10px] mt-1">2026 • 1 серия</p>
                 </div>
             </div>
+
         </div>
     </main>
 
-    <main id="player" class="hidden p-6 max-w-5xl mx-auto">
-        <button onclick="showPage('home')" class="text-cyan-400 mb-4 flex items-center gap-2 hover:underline">
-            ← Назад к списку
+    <main id="player" class="hidden p-4 max-w-5xl mx-auto">
+        <button onclick="showPage('home')" class="text-cyan-400 font-bold mb-4 flex items-center gap-2">
+            ← НАЗАД К КАТАЛОГУ
         </button>
-        <div class="glass p-2 rounded-2xl">
-            <video id="main-video" controls class="w-full rounded-xl shadow-2xl">
-                <source id="video-src" src="" type="video/mp4">
+        <div class="glass p-2 rounded-3xl shadow-2xl overflow-hidden">
+            <video id="main-video" controls class="w-full rounded-2xl">
+                <source id="video-source" src="" type="video/mp4">
             </video>
         </div>
-        <div class="mt-6 glass p-6 rounded-2xl">
-            <h2 id="player-title" class="text-3xl font-bold text-cyan-400 mb-2">Название</h2>
-            <div class="flex gap-2 mb-4" id="episode-list">
-                <button class="bg-cyan-600 px-4 py-2 rounded font-bold text-black shadow-lg">1 Серия</button>
-                <button class="bg-white/10 px-4 py-2 rounded font-bold hover:bg-cyan-600 hover:text-black transition-all">2 Серия</button>
-                <button class="bg-white/10 px-4 py-2 rounded font-bold hover:bg-cyan-600 hover:text-black transition-all">3 Серия</button>
+        <div class="mt-8 glass p-6">
+            <h2 id="player-title" class="text-3xl font-bold cyan-glow mb-4">Название</h2>
+            <div class="flex gap-3 mb-6">
+                <button class="bg-cyan-500 text-black font-bold px-4 py-2 rounded shadow-lg shadow-cyan-500/20 text-xs">1 СЕРИЯ</button>
+                <button class="bg-white/5 hover:bg-white/10 px-4 py-2 rounded text-xs transition-all">2 СЕРИЯ</button>
             </div>
-            <p id="player-desc" class="text-gray-400 italic"></p>
+            <p id="player-desc" class="text-gray-400 leading-relaxed italic"></p>
         </div>
     </main>
 
-    <main id="auth" class="hidden flex items-center justify-center p-6 mt-10">
-        <div class="glass p-10 rounded-3xl w-full max-w-md border-t-4 border-cyan-500">
-            <h2 class="text-3xl font-bold mb-6 neon-text text-center">ВХОД В СИСТЕМУ</h2>
+    <main id="auth" class="hidden flex items-center justify-center p-4 pt-20">
+        <div class="glass p-10 w-full max-w-md">
+            <h2 class="text-3xl font-bold text-center mb-8 cyan-glow italic">LOGIN</h2>
             <div class="space-y-4">
-                <input type="text" placeholder="ЛОГИН" class="w-full bg-black/50 border border-gray-800 p-4 rounded-xl focus:border-cyan-400 outline-none">
-                <input type="password" placeholder="ПАРОЛЬ" class="w-full bg-black/50 border border-gray-800 p-4 rounded-xl focus:border-cyan-400 outline-none">
-                <button class="w-full bg-cyan-600 hover:bg-cyan-400 text-black font-bold py-4 rounded-xl shadow-lg shadow-cyan-900/20">ВОЙТИ</button>
-                <p class="text-center text-sm text-gray-500">Нет аккаунта? <a href="#" class="text-cyan-400">Создать сейчас</a></p>
+                <input type="text" placeholder="ЛОГИН" class="w-full bg-black/40 border border-white/10 p-4 rounded-xl focus:border-cyan-400 outline-none">
+                <input type="password" placeholder="ПАРОЛЬ" class="w-full bg-black/40 border border-white/10 p-4 rounded-xl focus:border-cyan-400 outline-none">
+                <button class="w-full bg-blue-700 hover:bg-cyan-500 hover:text-black py-4 rounded-xl font-bold transition-all shadow-lg">ВОЙТИ</button>
+                <p class="text-center text-xs text-gray-500">Забыли пароль? <span class="text-cyan-400 cursor-pointer">Восстановить</span></p>
             </div>
         </div>
     </main>
 
     <script>
         function showPage(pageId) {
+            // Прячем все страницы
             ['home', 'player', 'auth'].forEach(id => {
                 document.getElementById(id).classList.add('hidden');
             });
+            // Показываем нужную
             document.getElementById(pageId).classList.remove('hidden');
+            
+            // Если уходим с плеера, выключаем видео
             if (pageId !== 'player') {
-                const video = document.getElementById('main-video');
-                video.pause();
+                document.getElementById('main-video').pause();
             }
             window.scrollTo(0, 0);
         }
 
         function openAnime(title, videoUrl, desc) {
+            const video = document.getElementById('main-video');
+            const source = document.getElementById('video-source');
+            
             document.getElementById('player-title').innerText = title;
             document.getElementById('player-desc').innerText = desc;
-            const video = document.getElementById('main-video');
-            const source = document.getElementById('video-src');
             
+            // Устанавливаем прямую ссылку с Archive.org
             source.src = videoUrl;
-            video.load();
+            
+            video.load(); // Перезагружаем видео-движок
             showPage('player');
+            video.play(); // Автозапуск
         }
-
-        // Поиск
-        document.getElementById('search').addEventListener('input', function(e) {
-            let query = e.target.value.toLowerCase();
-            let cards = document.querySelectorAll('.anime-card');
-            cards.forEach(card => {
-                let title = card.querySelector('h3').innerText.toLowerCase();
-                card.style.display = title.includes(query) ? 'block' : 'none';
-            });
-        });
     </script>
 </body>
-                        </html>
-                    
+</html>
