@@ -10,9 +10,7 @@
         .anime-card:hover { transform: scale(1.05); transition: 0.3s; }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-        .hero-gradient {
-            background: linear-gradient(to top, #0b0b0b 10%, transparent 100%);
-        }
+        .hero-gradient { background: linear-gradient(to top, #0b0b0b 10%, transparent 100%); }
     </style>
 </head>
 <body class="font-sans min-h-screen flex flex-col">
@@ -23,12 +21,13 @@
         </div>
         <div class="flex gap-4 items-center">
             <button onclick="switchTab('home')" class="text-gray-300 hover:text-white transition">🏠</button>
+            <button class="text-gray-400">🔍</button>
             <button id="auth-nav-btn" onclick="switchTab('profile')" class="bg-blue-600 px-4 py-1 rounded text-sm font-bold">ВОЙТИ</button>
         </div>
     </header>
 
     <main id="home-page" class="flex-grow">
-        <div class="relative w-full h-64 bg-cover bg-center" style="background-image: url('https://via.placeholder.com/1200x400/1a1a1a/ffffff?text=ANIME+BANNER');">
+        <div class="relative w-full h-64 bg-cover bg-center" style="background-image: url('https://m.media-amazon.com/images/M/MV5BN2NlM2Y5Uy1hYzExMy00OTI4LWEyNjItYTk4NzU2OGFlVjA2XkEyXkFqcGdeQXVyMzgxODM4NjM@._V1_FMjpg_UX1000_.jpg');">
             <div class="absolute inset-0 hero-gradient"></div>
             <div class="relative p-6 flex flex-col justify-end h-full">
                 <h1 class="text-3xl font-black uppercase">Человек Бензопила</h1>
@@ -40,7 +39,7 @@
             <h2 class="text-xl mb-4 border-l-4 border-blue-600 pl-2">Новинки</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div class="anime-card bg-gray-900 rounded-lg overflow-hidden cursor-pointer shadow-lg" onclick="openVideo('Наруто', 'https://www.w3schools.com/html/mov_bbb.mp4')">
-                    <img src="https://via.placeholder.com/300x450/1a1a1a/ffffff?text=Poster" class="w-full h-48 object-cover">
+                    <img src="https://m.media-amazon.com/images/M/MV5BZmQ5YzNlMzktZDU5OC00ZGU1LWIwYWUtZTEyNTkyNWZkTkU2XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg" class="w-full h-48 object-cover">
                     <div class="p-2">
                         <p class="text-sm font-bold truncate">Наруто: Ураганные хроники</p>
                         <p class="text-xs text-gray-400">RU / EN</p>
@@ -53,8 +52,8 @@
                 <div class="grid grid-cols-2 gap-2 max-w-sm mx-auto">
                     <div class="border border-gray-800 rounded-lg p-3 text-center hover:bg-gray-900 cursor-pointer italic font-bold">Ужасы</div>
                     <div class="border border-gray-800 rounded-lg p-3 text-center hover:bg-gray-900 cursor-pointer uppercase font-bold">ДРАМА</div>
-                    <div class="border border-gray-800 rounded-lg p-3 text-center hover:bg-gray-900 cursor-pointer font-bold">СПОРТ</div>
-                    <div class="border border-gray-800 rounded-lg p-3 text-center hover:bg-gray-900 cursor-pointer font-bold uppercase">ЭКШЕН</div>
+                    <div class="border border-gray-800 rounded-lg p-3 text-center hover:bg-gray-900 cursor-pointer font-bold">Гурман</div>
+                    <div class="border border-gray-800 rounded-lg p-3 text-center hover:bg-gray-900 cursor-pointer font-bold uppercase italic">СПОРТ</div>
                 </div>
             </section>
         </div>
@@ -68,108 +67,24 @@
                 <source id="video-src" src="" type="video/mp4">
             </video>
         </div>
-    </main>
-
-    <main id="profile-page" class="hidden flex-grow flex items-center justify-center p-4">
-        <div class="bg-[#181818] p-8 rounded-2xl w-full max-w-sm border border-gray-800 shadow-2xl text-center">
-            <h2 id="profile-title" class="text-2xl font-bold mb-6">Вход в аккаунт</h2>
-            
-            <div id="auth-ui">
-                <div class="space-y-4">
-                    <input id="email" type="email" placeholder="Email" class="w-full bg-[#0b0b0b] border border-gray-800 rounded-lg p-3 outline-none focus:border-blue-600 transition">
-                    <input id="password" type="password" placeholder="Пароль" class="w-full bg-[#0b0b0b] border border-gray-800 rounded-lg p-3 outline-none focus:border-blue-600 transition">
-                    <div class="flex gap-2">
-                        <button id="btn-login" class="flex-1 bg-blue-600 py-3 rounded-lg font-bold hover:bg-blue-700">Войти</button>
-                        <button id="btn-signup" class="flex-1 bg-gray-700 py-3 rounded-lg font-bold hover:bg-gray-600">Рег.</button>
-                    </div>
-                </div>
-            </div>
-
-            <div id="user-ui" class="hidden">
-                <div class="w-20 h-20 bg-blue-600 rounded-full mx-auto flex items-center justify-center text-3xl font-bold mb-4">U</div>
-                <p id="display-email" class="text-gray-400 mb-6 font-medium"></p>
-                <button id="btn-logout" class="w-full bg-red-600/20 text-red-500 py-3 rounded-lg font-bold hover:bg-red-600/30 border border-red-500/50">ВЫЙТИ</button>
-            </div>
+        <div class="mt-4 flex gap-2">
+            <button onclick="alert('Смена на RU')" class="bg-gray-800 px-4 py-2 rounded text-sm active:bg-blue-600">Русская озвучка</button>
+            <button onclick="alert('Смена на EN')" class="bg-gray-800 px-4 py-2 rounded text-sm">English Dub</button>
+        </div>
+        <div class="mt-6 flex gap-4 border-t border-gray-800 pt-4">
+            <button class="flex-1 bg-gray-800 py-2 rounded">❤️ В избранное</button>
+            <button class="flex-1 bg-gray-800 py-2 rounded">👍 1.2к лайков</button>
         </div>
     </main>
 
-    <footer class="p-6 border-t border-gray-800 text-center text-xs text-gray-600">
-        © 2026 ANIDUB MAX. Весь контент предоставлен в ознакомительных целях.
-    </footer>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-        // ТВОЯ КОНФИГУРАЦИЯ (Скопируй из Project Settings в Firebase)
-        const firebaseConfig = {
-            apiKey: "ВАШ_API_KEY",
-            authDomain: "ВАШ_PROJECT_ID.firebaseapp.com",
-            projectId: "ВАШ_PROJECT_ID",
-            storageBucket: "ВАШ_PROJECT_ID.appspot.com",
-            messagingSenderId: "ВАШ_SENDER_ID",
-            appId: "ВАШ_APP_ID"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-
-        // Переключение вкладок
-        window.switchTab = (tab) => {
-            ['home-page', 'video-page', 'profile-page'].forEach(id => document.getElementById(id).classList.add('hidden'));
-            document.getElementById(tab + '-page').classList.remove('hidden');
-        };
-
-        // Открытие плеера
-        window.openVideo = (title, url) => {
-            document.getElementById('video-title').innerText = title;
-            const player = document.getElementById('main-player');
-            document.getElementById('video-src').src = url;
-            player.load();
-            switchTab('video');
-        };
-
-        // Логика авторизации
-        const emailInput = document.getElementById('email');
-        const passInput = document.getElementById('password');
-
-        document.getElementById('btn-signup').onclick = () => {
-            createUserWithEmailAndPassword(auth, emailInput.value, passInput.value)
-                .then(() => alert("Аккаунт успешно создан!"))
-                .catch(err => alert("Ошибка: " + err.message));
-        };
-
-        document.getElementById('btn-login').onclick = () => {
-            signInWithEmailAndPassword(auth, emailInput.value, passInput.value)
-                .then(() => switchTab('home'))
-                .catch(err => alert("Ошибка входа: " + err.message));
-        };
-
-        document.getElementById('btn-logout').onclick = () => {
-            signOut(auth).then(() => switchTab('home'));
-        };
-
-        // Отслеживание состояния пользователя
-        onAuthStateChanged(auth, (user) => {
-            const authNavBtn = document.getElementById('auth-nav-btn');
-            const authUI = document.getElementById('auth-ui');
-            const userUI = document.getElementById('user-ui');
-            const profileTitle = document.getElementById('profile-title');
-
-            if (user) {
-                authNavBtn.innerText = "ПРОФИЛЬ";
-                authUI.classList.add('hidden');
-                userUI.classList.remove('hidden');
-                profileTitle.innerText = "Ваш профиль";
-                document.getElementById('display-email').innerText = user.email;
-            } else {
-                authNavBtn.innerText = "ВОЙТИ";
-                authUI.classList.remove('hidden');
-                userUI.classList.add('hidden');
-                profileTitle.innerText = "Вход в аккаунт";
-            }
-        });
-    </script>
-</body>
-    </html>
-    
+    <main id="profile-page" class="hidden flex-grow p-4">
+        <div id="auth-section" class="flex items-center justify-center min-h-[60vh]">
+            <div class="bg-[#181818] p-8 rounded-2xl w-full max-w-sm border border-gray-800 text-center shadow-2xl">
+                <h2 id="profile-title" class="text-2xl font-bold mb-6">Вход в аккаунт</h2>
+                <div id="auth-ui" class="space-y-4">
+                    <input id="email" type="email" placeholder="Email" class="w-full bg-[#0b0b0b] border border-gray-800 rounded-lg p-3 text-white outline-none focus:border-blue-600 transition">
+                    <input id="password" type="password" placeholder="Пароль" class="w-full bg-[#0b0b0b] border border-gray-800 rounded-lg p-3 text-white outline-none focus:border-blue-600 transition">
+                    <div class="flex gap-2">
+                        <button id="btn-login" class="flex-1 bg-blue-600 py-3 rounded-lg font-bold hover:bg-blue-700">Войти</button>
+                        <button id="btn-signup" class="flex-1 bg-gray-700 py
+                            
