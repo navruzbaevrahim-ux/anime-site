@@ -1,0 +1,8 @@
+[
+  { "id": 1, "title": "Attack on Titan", "year": 2013, "genres": ["Action","Drama"], "img": "https://via.placeholder.com/400x250?text=AOT", "description": "Humanity fights enormous humanoid Titans in a desperate struggle for survival." },
+  { "id": 2, "title": "Fullmetal Alchemist: Brotherhood", "year": 2009, "genres": ["Action","Adventure"], "img": "https://via.placeholder.com/400x250?text=FMA", "description": "Two brothers use alchemy to search for the Philosopher's Stone and restore their bodies." },
+  { "id": 3, "title": "Spirited Away", "year": 2001, "genres": ["Fantasy","Drama"], "img": "https://via.placeholder.com/400x250?text=Spirited+Away", "description": "A young girl becomes trapped in a mysterious spirit world and must find her way home." },
+  { "id": 4, "title": "My Hero Academia", "year": 2016, "genres": ["Action","School"], "img": "https://via.placeholder.com/400x250?text=MHA", "description": "A boy born without superpowers aims to become the world's greatest hero." },
+  { "id": 5, "title": "Death Note", "year": 2006, "genres": ["Mystery","Thriller"], "img": "https://via.placeholder.com/400x250?text=Death+Note", "description": "A high school student discovers a supernatural notebook that kills anyone whose name is written in it." },
+  { "id": 6, "title": "Cowboy Bebop", "year": 1998, "genres": ["Sci-Fi","Action"], "img": "https://via.placeholder.com/400x250?text=Cowboy+Bebop", "description": "Bounty hunters travel through space in search of criminals and meaning." }
+]

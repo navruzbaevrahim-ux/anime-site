@@ -6,24 +6,25 @@
   <meta name="description" content="Простая демо-страница каталога аниме — поиск, фильтрация и карточки.">
   <title>Anime Catalog</title>
 
-  <!-- Open Graph -->
   <meta property="og:title" content="Anime Catalog">
   <meta property="og:description" content="Простая демо-страница каталога аниме.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="assets/og-image.png">
 
-  <!-- Styles -->
   <link rel="stylesheet" href="styles.css">
-
-  <!-- Favicon (опционально) -->
   <link rel="icon" href="assets/favicon.ico" />
-
 </head>
 <body>
   <header class="site-header" role="banner">
     <div class="container header-inner">
       <h1 class="site-title">Anime Catalog</h1>
-      <nav class="site-nav" role="navigation" aria-label="Главная навигация">
+
+      <button id="hamburger" class="hamburger" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-nav">
+        <span class="line l1"></span>
+        <span class="line l2"></span>
+        <span class="line l3"></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" role="navigation" aria-label="Главная навигация">
         <a href="#" class="nav-link">Главная</a>
         <a href="#" class="nav-link">Жанры</a>
         <a href="#" class="nav-link">О проекте</a>
@@ -44,12 +45,26 @@
 
     <section aria-labelledby="catalog-heading" class="catalog-section">
       <h2 id="catalog-heading" class="section-title">Каталог</h2>
-      <div id="catalog" class="grid" role="list" aria-live="polite">
-        <!-- Карточки будут добавлены с помощью JS -->
-      </div>
+      <div id="catalog" class="grid" role="list" aria-live="polite"></div>
       <div id="empty-state" class="empty-state" hidden>Ничего не найдено.</div>
     </section>
   </main>
+
+  <div id="modal" class="modal" role="dialog" aria-hidden="true" aria-labelledby="modal-title">
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-panel" role="document">
+      <button class="modal-close" data-close aria-label="Закрыть">✕</button>
+      <div class="modal-content">
+        <img id="modal-img" src="" alt="" />
+        <div class="modal-info">
+          <h3 id="modal-title"></h3>
+          <p id="modal-genres" class="muted"></p>
+          <p id="modal-desc"></p>
+          <p class="muted" id="modal-year"></p>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <footer class="site-footer" role="contentinfo">
     <div class="container">
