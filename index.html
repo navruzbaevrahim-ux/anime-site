@@ -3,130 +3,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ANIDUB MAX | Full Edition</title>
+    <title>ANIDUB MAX</title>
+
+    <!-- Tailwind CDN (подходит для прототипа) -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Шрифт -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+
     <style>
-        /* СТИЛИ (CSS) */
         body {
-            background: url('https://i.ibb.co/VpBy4yC/1000148772.jpg') no-repeat center center fixed;
+            background: url('1000148772.jpg') no-repeat center center fixed;
             background-size: cover;
-            color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
+            color: #efefef;
+            font-family: 'Segoe UI', sans-serif;
         }
-        .glass {
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(0, 255, 255, 0.15);
-            border-radius: 20px;
-        }
-        .cyan-glow {
-            color: #00f2ff;
-            text-shadow: 0 0 10px rgba(0, 242, 255, 0.6);
+        .glass-header {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
         }
         .anime-card {
-            transition: transform 0.4s, box-shadow 0.4s;
-            cursor: pointer;
+            transition: 0.3s;
+            background: rgba(24, 24, 24, 0.9);
+            border: 1px solid rgba(255,255,255,0.1);
         }
         .anime-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 0 25px rgba(0, 242, 255, 0.4);
+            transform: scale(1.05);
+            border-color: #3b82f6;
         }
-        .hidden { display: none; }
-        input::placeholder { color: #555; }
+        .genre-font {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .description-box {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 15px;
+        }
     </style>
 </head>
-<body class="min-h-screen">
 
-    <header class="glass sticky top-0 z-50 p-4 flex justify-between items-center px-6 mb-4">
-        <div class="text-2xl font-black cursor-pointer tracking-tighter" onclick="showPage('home')">
-            ANIDUB <span class="cyan-glow">MAX</span>
+<body class="min-h-screen flex flex-col">
+
+<header class="p-4 border-b border-gray-800 flex justify-between items-center glass-header sticky top-0 z-50">
+    <div class="text-2xl font-bold cursor-pointer" onclick="switchTab('home')">
+        ANIDUB <span class="bg-blue-600 text-xs px-2 py-1 rounded">MAX</span>
+    </div>
+
+    <div class="flex gap-4 items-center">
+        <div class="relative flex items-center bg-black rounded-full px-3 py-1 border border-gray-700">
+            <input id="search-input" type="text" placeholder="Поиск..."
+                   class="bg-transparent text-xs outline-none w-24 focus:w-40 transition-all text-white">
+            <span class="text-gray-400 ml-1">🔍</span>
         </div>
-        <button onclick="showPage('auth')" class="bg-blue-600 hover:bg-cyan-400 hover:text-black transition-all px-6 py-1 rounded font-bold">
-            ВОЙТИ
+        <button onclick="switchTab('profile')" class="bg-blue-600 px-4 py-1 rounded text-xs font-bold uppercase">
+            Войти
         </button>
-    </header>
+    </div>
+</header>
 
-    <main id="home" class="p-4 max-w-7xl mx-auto">
-        <h2 class="text-2xl font-bold mb-6 border-l-4 border-cyan-400 pl-3">НОВИНКИ</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
-            
-            <div class="anime-card glass overflow-hidden" 
-                 onclick="openAnime('Первый шаг', 'https://archive.org/download/1_20260102_20260102_1556/1.mp4', 'Скромный старшеклассник Иппо Макуноути открывает в себе талант к боксу.')">
-                <div class="relative h-72">
-                    <img src="https://i.ibb.co/L9PzS8Y/1000148768.png" class="w-full h-full object-cover" alt="Постер">
-                    <div class="absolute top-2 right-2 bg-cyan-500 text-black text-[10px] font-bold px-2 py-0.5 rounded">HD</div>
-                </div>
-                <div class="p-3">
-                    <h3 class="font-bold text-sm uppercase truncate">Первый шаг</h3>
-                    <p class="text-gray-400 text-[10px] mt-1">2026 • 1 серия</p>
-                </div>
+<main class="flex-grow p-4">
+
+    <!-- HOME -->
+    <section id="home-page">
+        <h2 class="text-xl mb-6 border-l-4 border-blue-600 pl-2 font-bold uppercase">
+            Новинки сезона
+        </h2>
+
+        <div id="anime-list" class="grid grid-cols-2 md:grid-cols-4 gap-6"></div>
+    </section>
+
+    <!-- VIDEO -->
+    <section id="video-page" class="hidden">
+        <button onclick="switchTab('home')" class="mb-4 text-gray-400 text-sm">
+            ← Назад к списку
+        </button>
+
+        <div class="max-w-4xl mx-auto">
+            <h2 id="video-title" class="text-3xl font-bold mb-2"></h2>
+            <p id="video-genres" class="genre-font text-blue-500 mb-4"></p>
+
+            <div class="bg-black rounded-2xl overflow-hidden shadow-2xl border border-gray-800 aspect-video">
+                <iframe
+                    id="main-player"
+                    class="w-full h-full"
+                    allow="autoplay; fullscreen"
+                    referrerpolicy="no-referrer"
+                    sandbox="allow-scripts allow-same-origin allow-presentation">
+                </iframe>
             </div>
 
-        </div>
-    </main>
-
-    <main id="player" class="hidden p-4 max-w-5xl mx-auto">
-        <button onclick="showPage('home')" class="text-cyan-400 font-bold mb-4 flex items-center gap-2">
-            ← НАЗАД К КАТАЛОГУ
-        </button>
-        <div class="glass p-2 rounded-3xl shadow-2xl overflow-hidden">
-            <video id="main-video" controls class="w-full rounded-2xl">
-                <source id="video-source" src="" type="video/mp4">
-            </video>
-        </div>
-        <div class="mt-8 glass p-6">
-            <h2 id="player-title" class="text-3xl font-bold cyan-glow mb-4">Название</h2>
-            <div class="flex gap-3 mb-6">
-                <button class="bg-cyan-500 text-black font-bold px-4 py-2 rounded shadow-lg shadow-cyan-500/20 text-xs">1 СЕРИЯ</button>
-                <button class="bg-white/5 hover:bg-white/10 px-4 py-2 rounded text-xs transition-all">2 СЕРИЯ</button>
+            <div class="description-box">
+                <h3 class="text-lg font-bold text-blue-500 mb-2 uppercase">Описание</h3>
+                <p id="video-description" class="text-sm leading-relaxed text-gray-200"></p>
             </div>
-            <p id="player-desc" class="text-gray-400 leading-relaxed italic"></p>
         </div>
-    </main>
+    </section>
 
-    <main id="auth" class="hidden flex items-center justify-center p-4 pt-20">
-        <div class="glass p-10 w-full max-w-md">
-            <h2 class="text-3xl font-bold text-center mb-8 cyan-glow italic">LOGIN</h2>
+    <!-- PROFILE -->
+    <section id="profile-page" class="hidden flex justify-center items-center">
+        <div class="bg-black/80 p-8 rounded-2xl w-full max-w-sm border border-gray-800 text-center backdrop-blur-md">
+            <h2 class="text-2xl font-bold mb-6">Авторизация (демо)</h2>
+
             <div class="space-y-4">
-                <input type="text" placeholder="ЛОГИН" class="w-full bg-black/40 border border-white/10 p-4 rounded-xl focus:border-cyan-400 outline-none">
-                <input type="password" placeholder="ПАРОЛЬ" class="w-full bg-black/40 border border-white/10 p-4 rounded-xl focus:border-cyan-400 outline-none">
-                <button class="w-full bg-blue-700 hover:bg-cyan-500 hover:text-black py-4 rounded-xl font-bold transition-all shadow-lg">ВОЙТИ</button>
-                <p class="text-center text-xs text-gray-500">Забыли пароль? <span class="text-cyan-400 cursor-pointer">Восстановить</span></p>
+                <input type="email" placeholder="Email"
+                       class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 outline-none">
+                <input type="password" placeholder="Пароль"
+                       class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 outline-none">
+                <button class="w-full bg-blue-600 py-3 rounded-lg font-bold">
+                    Войти
+                </button>
             </div>
         </div>
-    </main>
+    </section>
 
-    <script>
-        function showPage(pageId) {
-            // Прячем все страницы
-            ['home', 'player', 'auth'].forEach(id => {
-                document.getElementById(id).classList.add('hidden');
-            });
-            // Показываем нужную
-            document.getElementById(pageId).classList.remove('hidden');
-            
-            // Если уходим с плеера, выключаем видео
-            if (pageId !== 'player') {
-                document.getElementById('main-video').pause();
-            }
-            window.scrollTo(0, 0);
-        }
+</main>
 
-        function openAnime(title, videoUrl, desc) {
-            const video = document.getElementById('main-video');
-            const source = document.getElementById('video-source');
-            
-            document.getElementById('player-title').innerText = title;
-            document.getElementById('player-desc').innerText = desc;
-            
-            // Устанавливаем прямую ссылку с Archive.org
-            source.src = videoUrl;
-            
-            video.load(); // Перезагружаем видео-движок
-            showPage('player');
-            video.play(); // Автозапуск
-        }
-    </script>
+<script>
+/* ===== DATA ===== */
+const animeList = [
+    {
+        title: "Первый шаг",
+        genres: "Спорт, Бокс, Комедия",
+        image: "1000148768.png",
+        video: "https://t.me/Rahimuglmagiyaxzisnsgd/2?embed=1",
+        description: "Иппо Макуноути — тихий и скромный школьник, чья жизнь меняется после встречи с профессиональным боксёром."
+    }
+];
+
+/* ===== RENDER ===== */
+const container = document.getElementById('anime-list');
+
+animeList.forEach(anime => {
+    const card = document.createElement('div');
+    card.className = "anime-card rounded-xl overflow-hidden cursor-pointer shadow-2xl";
+    card.dataset.title = anime.title.toLowerCase();
+
+    card.innerHTML = `
+        <img src="${anime.image}" class="w-full h-72 object-cover">
+        <div class="p-3">
+            <p class="text-sm font-bold truncate">${anime.title}</p>
+            <p class="text-[10px] text-blue-400 mt-1 genre-font">${anime.genres}</p>
+        </div>
+    `;
+
+    card.onclick = () => openVideo(anime);
+    container.appendChild(card);
+});
+
+/* ===== FUNCTIONS ===== */
+function switchTab(tab) {
+    ['home', 'video', 'profile'].forEach(t =>
+        document.getElementById(`${t}-page`).classList.add('hidden')
+    );
+    document.getElementById(`${tab}-page`).classList.remove('hidden');
+
+    if (tab !== 'video') {
+        document.getElementById('main-player').src = "";
+    }
+}
+
+function openVideo(anime) {
+    document.getElementById('video-title').innerText = anime.title;
+    document.getElementById('video-genres').innerText = "Жанры: " + anime.genres;
+    document.getElementById('video-description').innerText = anime.description;
+    document.getElementById('main-player').src = anime.video;
+    switchTab('video');
+}
+
+/* ===== SEARCH ===== */
+document.getElementById('search-input').addEventListener('input', e => {
+    const query = e.target.value.toLowerCase();
+    document.querySelectorAll('.anime-card').forEach(card => {
+        card.style.display = card.dataset.title.includes(query) ? '' : 'none';
+    });
+});
+</script>
+
 </body>
 </html>
