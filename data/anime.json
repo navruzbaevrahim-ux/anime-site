@@ -1,5 +1,5 @@
 [
-  { "id": 1, "title": "Attack on Titan", "year": 2013, "genres": ["Action", "Drama"], "img": "https://via.placeholder.com/400x250?text=AOT", "description": "Humanity fights enormous humanoid Titans in a desperate struggle for survival.","videoUrl": "https://www.youtube.com/embed/F5vmTbYkFYA" },
+  { "id": 1, "title": "Attack on Titan", "year": 2013, "genres": ["Action", "Drama"], "img": "https://github.com/navruzbaevrahim-ux/anime-site/blob/main/logo.png", "description": "Humanity fights enormous humanoid Titans in a desperate struggle for survival.","videoUrl": "https://www.youtube.com/embed/F5vmTbYkFYA" },
   { "id": 2, "title": "Fullmetal Alchemist: Brotherhood", "year": 2009, "genres": ["Action","Adventure"], "img": "https://via.placeholder.com/400x250?text=FMA", "description": "Two brothers use alchemy to search for the Philosopher's Stone and restore their bodies." },
   { "id": 3, "title": "Spirited Away", "year": 2001, "genres": ["Fantasy","Drama"], "img": "https://via.placeholder.com/400x250?text=Spirited+Away", "description": "A young girl becomes trapped in a mysterious spirit world and must find her way home." },
   { "id": 4, "title": "My Hero Academia", "year": 2016, "genres": ["Action","School"], "img": "https://via.placeholder.com/400x250?text=MHA", "description": "A boy born without superpowers aims to become the world's greatest hero." },
