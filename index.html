@@ -1,0 +1,384 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Демо-страница каталога аниме с поиском и фильтром." />
+  <title>Anime Catalog</title>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Anime Catalog">
+  <meta property="og:description" content="Демо-страница каталога аниме с поиском и фильтром.">
+  <meta property="og:type" content="website">
+
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/favicon.ico" />
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <h1 class="site-title">Anime Catalog</h1>
+      <button id="hamburger" class="hamburger" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-nav">
+        <span class="line l1"></span>
+        <span class="line l2"></span>
+        <span class="line l3"></span>
+      </button>
+      <nav id="site-nav" class="site-nav" role="navigation" aria-label="Главная навигация">
+        <a href="#" class="nav-link">Главная</a>
+        <a href="#" class="nav-link">Жанры</a>
+        <a href="#" class="nav-link">О проекте</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="container" role="main">
+    <!-- SEARCH -->
+    <section class="search-section">
+      <h2 id="search-heading" class="visually-hidden">Поиск аниме</h2>
+      <div class="search-controls">
+        <input id="search" type="search" placeholder="Поиск по названию..." aria-label="Поиск по названию">
+        <select id="filter-genre" aria-label="Фильтр по жанру">
+          <option value="">Все жанры</option>
+        </select>
+        <select id="sort" aria-label="Сортировка">
+          <option value="year">По году</option>
+          <option value="name">По названию</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- CATALOG -->
+    <section aria-labelledby="catalog-heading" class="catalog-section">
+      <h2 id="catalog-heading" class="section-title">Каталог</h2>
+      <div id="catalog" class="grid" role="list" aria-live="polite"></div>
+      <div id="empty-state" class="empty-state" hidden>
+        <img src="assets/empty.png" alt="Ничего не найдено" />
+        <p>Ничего не найдено.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL -->
+  <div id="modal" class="modal" role="dialog" aria-hidden="true" aria-labelledby="modal-title">
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-panel" role="document">
+      <button class="modal-close" data-close aria-label="Закрыть">✕</button>
+      <div class="modal-content">
+        <img id="modal-img" src="" alt="" />
+        <div class="modal-info">
+          <h3 id="modal-title"></h3>
+          <p id="modal-genres" class="muted"></p>
+          <p id="modal-desc"></p>
+          <p class="muted" id="modal-year"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <p>&copy; <span id="year"></span> Anime Catalog -- демо-проект</p>
+    </div>
+  </footer>
+
+  <script src="main.js" defer></script>
+</body>
+</html><style>/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f9f9f9;
+  color: #222;
+  line-height: 1.5;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* HEADER */
+.site-header {
+  background: #333;
+  color: #fff;
+  padding: 10px 0;
+}
+.site-title {
+  font-size: 1.8rem;
+}
+.site-nav {
+  display: flex;
+  gap: 15px;
+}
+.site-nav a {
+  color: #fff;
+  text-decoration: none;
+}
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.hamburger span {
+  display: block;
+  height: 3px;
+  width: 25px;
+  background: #fff;
+  border-radius: 2px;
+}
+
+/* SEARCH */
+.search-controls {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+.search-controls input,
+.search-controls select {
+  padding: 8px;
+  font-size: 1rem;
+}
+
+/* CATALOG GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+}
+.anime-card {
+  background: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+  opacity: 0;
+}
+.anime-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+.anime-card img {
+  width: 100%;
+  display: block;
+}
+.anime-card figcaption {
+  padding: 10px;
+  font-weight: bold;
+}
+.genres, .year {
+  padding: 0 10px 10px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* EMPTY STATE */
+.empty-state {
+  text-align: center;
+  margin-top: 40px;
+}
+.empty-state img {
+  width: 150px;
+  opacity: 0.5;
+}
+
+/* MODAL */
+.modal {
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  display: flex;
+  justify-content:center;
+  align-items:center;
+  background: rgba(0,0,0,0.5);
+  opacity:0;
+  pointer-events:none;
+  transition: opacity 0.3s;
+}
+.modal[aria-hidden="false"] {
+  opacity:1;
+  pointer-events:auto;
+}
+.modal-panel {
+  background:#fff;
+  border-radius:6px;
+  max-width:600px;
+  width:90%;
+  overflow:hidden;
+  position: relative;
+}
+.modal-close {
+  position:absolute;
+  top:10px; right:10px;
+  border:none;
+  background:none;
+  font-size:1.5rem;
+  cursor:pointer;
+}
+.modal-content {
+  display:flex;
+  flex-direction: column;
+}
+.modal-content img {
+  width:100%;
+}
+.modal-info {
+  padding:15px;
+}
+.muted {
+  color:#555;
+  font-size:0.9rem;
+}
+
+/* FOOTER */
+.site-footer {
+  background:#333;
+  color:#fff;
+  text-align:center;
+  padding:15px 0;
+}
+
+/* VISUALLY HIDDEN */
+.visually-hidden {
+  position:absolute;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+  clip:rect(0 0 0 0);
+}
+
+/* MEDIA */
+@media(max-width:768px){
+  .hamburger { display:flex; }
+  .site-nav { display:none; flex-direction:column; gap:10px; margin-top:10px;}
+  .site-nav.active { display:flex; }
+}</style><script>// Данные для демо
+const animeList = [
+  {
+    name: "Attack on Titan",
+    genres: ["Экшен", "Драма"],
+    year: 2023,
+    desc: "Сюжет о гигантах и человечестве.",
+    img: "assets/aot.jpg"
+  },
+  {
+    name: "My Hero Academia",
+    genres: ["Супергеройский", "Приключения"],
+    year: 2022,
+    desc: "История учеников Академии героев.",
+    img: "assets/mha.jpg"
+  },
+  {
+    name: "Demon Slayer",
+    genres: ["Фэнтези", "Экшен"],
+    year: 2023,
+    desc: "Борьба с демонами.",
+    img: "assets/demonslayer.jpg"
+  }
+];
+
+// Элементы DOM
+const catalog = document.getElementById("catalog");
+const searchInput = document.getElementById("search");
+const filterGenre = document.getElementById("filter-genre");
+const sortSelect = document.getElementById("sort");
+const emptyState = document.getElementById("empty-state");
+const modal = document.getElementById("modal");
+const modalImg = document.getElementById("modal-img");
+const modalTitle = document.getElementById("modal-title");
+const modalGenres = document.getElementById("modal-genres");
+const modalDesc = document.getElementById("modal-desc");
+const modalYear = document.getElementById("modal-year");
+const yearSpan = document.getElementById("year");
+yearSpan.textContent = new Date().getFullYear();
+
+// Заполнение фильтра жанров
+const genresSet = new Set();
+animeList.forEach(a => a.genres.forEach(g => genresSet.add(g)));
+genresSet.forEach(g => {
+  const opt = document.createElement("option");
+  opt.value = g;
+  opt.textContent = g;
+  filterGenre.appendChild(opt);
+});
+
+// Функция рендера каталога
+function renderCatalog() {
+  const searchVal = searchInput.value.toLowerCase();
+  const genreVal = filterGenre.value;
+  const sortVal = sortSelect.value;
+
+  let filtered = animeList.filter(a => 
+    a.name.toLowerCase().includes(searchVal) &&
+    (genreVal === "" || a.genres.includes(genreVal))
+  );
+
+  if(sortVal === "year") filtered.sort((a,b)=>b.year-a.year);
+  else filtered.sort((a,b)=>a.name.localeCompare(b.name));
+
+  catalog.innerHTML = "";
+  if(filtered.length === 0){
+    emptyState.hidden = false;
+    return;
+  }
+  emptyState.hidden = true;
+
+  filtered.forEach(a => {
+    const card = document.createElement("article");
+    card.className = "anime-card";
+    card.innerHTML = `
+      <figure>
+        <img src="${a.img}" alt="${a.name}" />
+        <figcaption>${a.name}</figcaption>
+      </figure>
+      <p class="genres">Жанры: ${a.genres.join(", ")}</p>
+      <p class="year">${a.year}</p>
+    `;
+    card.style.opacity = 0;
+    card.addEventListener("click", ()=>openModal(a));
+    catalog.appendChild(card);
+    setTimeout(()=>card.style.opacity=1,50);
+  });
+}
+
+// МОДАЛКА
+function openModal(a){
+  modalImg.src = a.img;
+  modalImg.alt = a.name;
+  modalTitle.textContent = a.name;
+  modalGenres.textContent = "Жанры: " + a.genres.join(", ");
+  modalDesc.textContent = a.desc;
+  modalYear.textContent = a.year;
+  modal.setAttribute("aria-hidden","false");
+}
+function closeModal(){ modal.setAttribute("aria-hidden","true"); }
+document.querySelectorAll("[data-close]").forEach(b=>b.addEventListener("click", closeModal));
+document.addEventListener("keydown", e=>{ if(e.key==="Escape") closeModal(); });
+
+// BURGER MENU
+const hamburger = document.getElementById("hamburger");
+const nav = document.getElementById("site-nav");
+hamburger.addEventListener("click",()=>{
+  nav.classList.toggle("active");
+  hamburger.setAttribute("aria-expanded", nav.classList.contains("active"));
+});
+
+// FILTERS
+searchInput.addEventListener("input", renderCatalog);
+filterGenre.addEventListener("change", renderCatalog);
+sortSelect.addEventListener("change", renderCatalog);
+
+// INITIAL RENDER
+renderCatalog();</script>
